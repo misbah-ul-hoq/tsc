@@ -56,19 +56,14 @@ const AuthProviderWrapper = ({ children }: { children: ReactNode }) => {
   };
 
   useEffect(() => {
-    // const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-    //   if (currentUser) {
-    //     setUser(currentUser);
-    //     setLoading(false);
-    //   }
-    // });
-    onAuthStateChanged(auth, (currentUser) => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
         setUser(currentUser);
         setLoading(false);
       }
     });
-    // return () => unsubscribe();
+
+    return () => unsubscribe();
   }, []);
 
   const data = {
