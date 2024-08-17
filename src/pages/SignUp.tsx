@@ -1,14 +1,18 @@
 import { FormEvent, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import SocialLogin from "../components/Shared/SocialLogin";
 import api from "../axios/api";
 import axios from "axios";
+import { useAuth } from "../hooks/useAuth";
+import { updateProfile } from "firebase/auth";
 
 const SignupForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [password, setPassword] = useState("");
   const [photoUrl, setPhotoUrl] = useState("");
+  const { emailSignUp } = useAuth();
+  const navigate = useNavigate();
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = new FormData(e.target as HTMLFormElement);
@@ -28,7 +32,7 @@ const SignupForm = () => {
       });
       return;
     }
-    console.log(photo);
+
     axios
       .post(`https://api.imgbb.com/1/upload`, imageData, {
         params: { key: import.meta.env.VITE_IMGBB },
@@ -41,6 +45,21 @@ const SignupForm = () => {
         if (res.data.success) {
           //
           setPhotoUrl(res.data.data.display_url);
+
+          emailSignUp(email, password).then((userCredential) => {
+            const user = userCredential.user;
+            updateProfile(user, { photoURL: photoUrl }).then(() => {
+              Swal.fire({
+                title: "Signup Sucessfull. Now please login",
+                icon: "success",
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  navigate("/login");
+                }
+              });
+            });
+          });
+
           api
             .post("/users", {
               name,

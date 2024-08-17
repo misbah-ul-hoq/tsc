@@ -15,7 +15,7 @@ interface ContextProps {
   user: User | null;
   loading: boolean;
   googleLogin: () => Promise<UserCredential>;
-  emailSignUp: unknown;
+  emailSignUp: (email: string, password: string) => Promise<UserCredential>;
   logOut: () => Promise<void>;
   //   emailLogin: unknown;
 }
