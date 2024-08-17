@@ -1,17 +1,38 @@
 import { NavLink } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
 
 const Navbar = () => {
+  const { user, loading, logOut } = useAuth();
   const navLinks = (
     <>
       <li>
         <NavLink to="/">Home</NavLink>
       </li>
-      <li>
-        <NavLink to="/signup">SignUp</NavLink>
-      </li>
-      <li>
-        <NavLink to="/login">Login</NavLink>
-      </li>
+      {!user && !loading && (
+        <>
+          <li>
+            <NavLink to="/signup">SignUp</NavLink>
+          </li>
+          <li>
+            <NavLink to="/login">Login</NavLink>
+          </li>
+        </>
+      )}
+
+      {user && !loading && (
+        <>
+          <li
+            onClick={() => {
+              logOut().then().catch();
+            }}
+          >
+            <a>Logout</a>
+          </li>
+          <li>
+            <NavLink to="/dashboard">Dashboard</NavLink>
+          </li>
+        </>
+      )}
     </>
   );
   return (
@@ -64,9 +85,15 @@ const Navbar = () => {
         <ul className="menu menu-horizontal px-1">{navLinks}</ul>
       </div>
 
-      <div className="navbar-end">
-        <a className="btn">Button</a>
-      </div>
+      {user && (
+        <div className="navbar-end">
+          <img
+            src={user?.photoURL || ""}
+            alt=""
+            className="h-10 w-10 rounded-full object-cover"
+          />
+        </div>
+      )}
     </nav>
   );
 };

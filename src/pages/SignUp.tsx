@@ -1,9 +1,9 @@
 import { FormEvent, useState } from "react";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import SocialLogin from "../components/Shared/SocialLogin";
 
 const SignupForm = () => {
-  console.log(import.meta.env.VITE_apiKey);
   const [showPassword, setShowPassword] = useState(false);
   const [password, setPassword] = useState("");
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -24,7 +24,7 @@ const SignupForm = () => {
     console.log({ name, email, password, role });
   };
   return (
-    <div className="grid lg:grid-cols-2 gap-5 items-center container-center py-2 md:py-5">
+    <div className="grid lg:grid-cols-2 gap-5 container-center py-2 md:py-5">
       <div className="illustrator order-1 lg:order-0 mx-auto">
         <img src="/signup-illustrator.svg" alt="" className="w-full" />
       </div>
@@ -34,17 +34,7 @@ const SignupForm = () => {
           <h2 className="text-3xl font-extrabold text-center">
             Create an account
           </h2>
-          <button className="w-full py-2 mt-2 font-semibold rounded-lg btn btn-primary text-white">
-            <div className="flex items-center justify-center">
-              <img
-                src="/google.svg"
-                alt="Google Logo"
-                className="w-5 h-5 mr-2 object-cover"
-              />
-              Sign up with Google
-            </div>
-          </button>
-          <div className="divider">OR</div>
+
           <form className="space-y-4" onSubmit={handleSubmit}>
             <div>
               <label htmlFor="name" className="block text-sm font-medium">
@@ -138,7 +128,7 @@ const SignupForm = () => {
               Create account
             </button>
           </form>
-          <p className="mt-4 text-sm text-center">
+          <p className="my-3 text-sm text-center">
             Already a member?{" "}
             <Link
               to="/login"
@@ -147,6 +137,10 @@ const SignupForm = () => {
               Log in
             </Link>
           </p>
+
+          <div className="divider">OR</div>
+
+          <SocialLogin />
         </div>
       </div>
     </div>
