@@ -1,14 +1,33 @@
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
+import Swal from "sweetalert2";
+import api from "../../axios/api";
 
 const SocialLogin = () => {
-  const { googleLogin } = useAuth();
+  const { googleLogin, githubLogin } = useAuth();
+  const navigate = useNavigate();
 
   return (
     <div>
       <button
         className="w-full py-2 font-semibold rounded-lg btn btn-accent text-white"
         onClick={() => {
-          googleLogin().then().catch();
+          googleLogin()
+            .then((userCredential) => {
+              const user = userCredential.user;
+              api.post(`/users?socialLogin=true`, user);
+              Swal.fire({
+                title: "Google Login Successfull",
+                icon: "success",
+              });
+              navigate("/");
+            })
+            .catch((error) => {
+              Swal.fire({
+                title: error.message,
+                icon: "error",
+              });
+            });
         }}
       >
         <div className="flex items-center justify-center">
@@ -21,7 +40,27 @@ const SocialLogin = () => {
         </div>
       </button>
 
-      <button className="w-full py-2 mt-2 font-semibold rounded-lg btn btn-secondary text-white">
+      <button
+        className="w-full py-2 mt-2 font-semibold rounded-lg btn btn-secondary text-white"
+        onClick={() => {
+          githubLogin()
+            .then((userCredential) => {
+              const user = userCredential.user;
+              api.post(`/users?socialLogin=true`, user);
+              Swal.fire({
+                title: "Github Login Successfull",
+                icon: "success",
+              });
+              navigate("/");
+            })
+            .catch((error) => {
+              Swal.fire({
+                title: error.message,
+                icon: "error",
+              });
+            });
+        }}
+      >
         <div className="flex items-center justify-center">
           <img
             src="/github.svg"

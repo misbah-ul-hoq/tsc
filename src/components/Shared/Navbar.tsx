@@ -1,13 +1,15 @@
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
+import Swal from "sweetalert2";
 
 const Navbar = () => {
-  const { user, loading, logOut } = useAuth();
+  const { user, logOut } = useAuth();
   const navLinks = (
     <>
       <li>
         <NavLink to="/">Home</NavLink>
       </li>
+
       {!user && (
         <>
           <li>
@@ -19,11 +21,18 @@ const Navbar = () => {
         </>
       )}
 
-      {user && !loading && (
+      {user && (
         <>
           <li
             onClick={() => {
-              logOut().then().catch();
+              Swal.fire({
+                title: "Are you sure to logout?",
+                icon: "question",
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  logOut();
+                }
+              });
             }}
           >
             <a>Logout</a>

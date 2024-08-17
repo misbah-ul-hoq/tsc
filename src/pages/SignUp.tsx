@@ -52,6 +52,7 @@ const SignupForm = () => {
             .then((userCredential) => {
               const user = userCredential.user;
               setIsLoading(false);
+
               api.post("/users", {
                 ...user,
                 password: password,
@@ -59,6 +60,7 @@ const SignupForm = () => {
                 displayName: name,
                 photoURL: res.data.data.display_url,
               });
+
               updateProfile(user, {
                 photoURL: res.data.data.display_url,
                 displayName: name,
