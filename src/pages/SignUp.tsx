@@ -2,10 +2,13 @@ import { FormEvent, useState } from "react";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import SocialLogin from "../components/Shared/SocialLogin";
+import api from "../axios/api";
+import axios from "axios";
 
 const SignupForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [password, setPassword] = useState("");
+  const [photoUrl, setPhotoUrl] = useState("");
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = new FormData(e.target as HTMLFormElement);
@@ -13,6 +16,10 @@ const SignupForm = () => {
     const email = form.get("email") as string;
     const role = form.get("role") as string;
     const password = form.get("password") as string;
+    const imageData = new FormData();
+    const photo = form.get("photo") as Blob;
+    imageData.append("image", photo);
+
     if (!/^(?=.*[a-z])(?=.*[A-Z]).{6,}$/.test(password)) {
       Swal.fire({
         icon: "warning",
@@ -21,7 +28,33 @@ const SignupForm = () => {
       });
       return;
     }
-    console.log({ name, email, password, role });
+    console.log(photo);
+    axios
+      .post(`https://api.imgbb.com/1/upload`, imageData, {
+        params: { key: import.meta.env.VITE_IMGBB },
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        // console.log(res.data);
+        if (res.data.success) {
+          //
+          setPhotoUrl(res.data.data.display_url);
+          api
+            .post("/users", {
+              name,
+              email,
+              password,
+              role,
+              photoUrl,
+            })
+            .then((res) => {
+              console.log(res.data);
+            });
+        }
+      });
+    // console.log({ name, email, password, role, photo });
   };
   return (
     <div className="grid lg:grid-cols-2 gap-5 container-center py-2 md:py-5">
@@ -123,6 +156,18 @@ const SignupForm = () => {
                 <option value="tutor">Tutor</option>
                 <option value="admin">Admin</option>
               </select>
+            </div>
+
+            {/* photo */}
+            <div>
+              <label htmlFor="photo" className="block text-sm font-medium">
+                Photo
+              </label>
+              <input
+                type="file"
+                name="photo"
+                className="file-input file-input-bordered file-input-success w-full"
+              />
             </div>
             <button type="submit" className="btn btn-info btn-block text-white">
               Create account

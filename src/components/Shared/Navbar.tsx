@@ -8,7 +8,7 @@ const Navbar = () => {
       <li>
         <NavLink to="/">Home</NavLink>
       </li>
-      {!user && !loading && (
+      {!user && (
         <>
           <li>
             <NavLink to="/signup">SignUp</NavLink>
