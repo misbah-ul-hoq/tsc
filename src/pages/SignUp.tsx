@@ -10,7 +10,8 @@ import { updateProfile } from "firebase/auth";
 const SignupForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [password, setPassword] = useState("");
-  const [photoUrl, setPhotoUrl] = useState("");
+
+  const [isLoading, setIsLoading] = useState(false);
   const { emailSignUp } = useAuth();
   const navigate = useNavigate();
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -33,6 +34,8 @@ const SignupForm = () => {
       return;
     }
 
+    setIsLoading(true);
+
     axios
       .post(`https://api.imgbb.com/1/upload`, imageData, {
         params: { key: import.meta.env.VITE_IMGBB },
@@ -44,32 +47,38 @@ const SignupForm = () => {
         // console.log(res.data);
         if (res.data.success) {
           //
-          setPhotoUrl(res.data.data.display_url);
 
-          emailSignUp(email, password).then((userCredential) => {
-            const user = userCredential.user;
-            updateProfile(user, { photoURL: photoUrl }).then(() => {
-              Swal.fire({
-                title: "Signup Sucessfull. Now please login",
-                icon: "success",
-              }).then((result) => {
-                if (result.isConfirmed) {
-                  navigate("/login");
-                }
+          emailSignUp(email, password)
+            .then((userCredential) => {
+              const user = userCredential.user;
+              setIsLoading(false);
+              api.post("/users", {
+                ...user,
+                password: password,
+                role: role,
+                displayName: name,
+                photoURL: res.data.data.display_url,
               });
-            });
-          });
-
-          api
-            .post("/users", {
-              name,
-              email,
-              password,
-              role,
-              photoUrl,
+              updateProfile(user, {
+                photoURL: res.data.data.display_url,
+                displayName: name,
+              }).then(() => {
+                Swal.fire({
+                  title: "Signup Sucessfull.",
+                  icon: "success",
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    navigate("/");
+                  }
+                });
+              });
             })
-            .then((res) => {
-              console.log(res.data);
+            .catch((error) => {
+              setIsLoading(false);
+              Swal.fire({
+                title: error.message,
+                icon: "error",
+              });
             });
         }
       });
@@ -188,7 +197,14 @@ const SignupForm = () => {
                 className="file-input file-input-bordered file-input-success w-full"
               />
             </div>
-            <button type="submit" className="btn btn-info btn-block text-white">
+            {isLoading && (
+              <span className="loading loading-spinner loading-lg"></span>
+            )}
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="btn btn-info btn-block text-white"
+            >
               Create account
             </button>
           </form>

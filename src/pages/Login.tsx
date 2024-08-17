@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import SocialLogin from "../components/Shared/SocialLogin";
 
 const LoginForm = () => {
   return (
@@ -46,6 +47,10 @@ const LoginForm = () => {
             <Link to="/signup" className="text-purple-600 text-lg">
               SignUp
             </Link>
+          </div>
+          <div className="divider mt-0">Or</div>
+          <div className="px-3 pb-3">
+            <SocialLogin />
           </div>
         </div>
       </div>
