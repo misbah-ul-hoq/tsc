@@ -16,6 +16,17 @@ const SocialLogin = () => {
             .then((userCredential) => {
               const user = userCredential.user;
               api.post(`/users?socialLogin=true`, user);
+              api.get(`/user/${user.email}`).then((res) => {
+                const userInfoJwt = {
+                  name: res.data.displayName,
+                  email: res.data.email,
+                  role: res.data.role,
+                };
+                api.post("/jwt", userInfoJwt).then((res) => {
+                  console.log(res.data);
+                  localStorage.setItem("accessToken", res.data.token);
+                });
+              });
               Swal.fire({
                 title: "Google Login Successfull",
                 icon: "success",
@@ -47,6 +58,17 @@ const SocialLogin = () => {
             .then((userCredential) => {
               const user = userCredential.user;
               api.post(`/users?socialLogin=true`, user);
+              api.get(`/user/${user.email}`).then((res) => {
+                const userInfoJwt = {
+                  name: res.data.displayName,
+                  email: res.data.email,
+                  role: res.data.role,
+                };
+                api.post("/jwt", userInfoJwt).then((res) => {
+                  console.log(res.data);
+                  localStorage.setItem("accessToken", res.data.token);
+                });
+              });
               Swal.fire({
                 title: "Github Login Successfull",
                 icon: "success",

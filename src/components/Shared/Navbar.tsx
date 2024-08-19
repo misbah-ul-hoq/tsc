@@ -30,7 +30,9 @@ const Navbar = () => {
                 icon: "question",
               }).then((result) => {
                 if (result.isConfirmed) {
-                  logOut();
+                  logOut().then(() => {
+                    localStorage.removeItem("accessToken");
+                  });
                 }
               });
             }}
