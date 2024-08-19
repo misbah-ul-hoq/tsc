@@ -31,7 +31,7 @@ const AuthProviderWrapper = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState(true);
 
   const logOut = () => {
-    // setLoading(true);
+    setLoading(true);
     return signOut(auth);
   };
 
@@ -59,6 +59,9 @@ const AuthProviderWrapper = ({ children }: { children: ReactNode }) => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
         setUser(currentUser);
+        setLoading(false);
+      } else {
+        setUser(null);
         setLoading(false);
       }
     });

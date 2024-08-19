@@ -3,12 +3,14 @@ import SocialLogin from "../components/Shared/SocialLogin";
 import { FormEvent, useState } from "react";
 import { useAuth } from "../hooks/useAuth";
 import Swal from "sweetalert2";
+import api from "../axios/api";
 
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setLoading] = useState(false);
   const { emailLogin } = useAuth();
   const navigate = useNavigate();
+
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
     setLoading(true);
@@ -18,6 +20,18 @@ const LoginForm = () => {
     emailLogin(email, password)
       .then((userCredential) => {
         const user = userCredential.user;
+        api.get(`/user/${user.email}`).then((res) => {
+          console.log(res.data);
+          const userInfoJwt = {
+            name: res.data.displayName,
+            email: res.data.email,
+            role: res.data.role,
+          };
+          api.post("/jwt", userInfoJwt).then((res) => {
+            console.log(res.data);
+            localStorage.setItem("accessToken", res.data.token);
+          });
+        });
         setLoading(false);
         if (user) {
           navigate("/");

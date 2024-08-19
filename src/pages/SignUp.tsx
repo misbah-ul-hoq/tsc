@@ -12,8 +12,9 @@ const SignupForm = () => {
   const [password, setPassword] = useState("");
 
   const [isLoading, setIsLoading] = useState(false);
-  const { emailSignUp } = useAuth();
+  const { emailSignUp, logOut } = useAuth();
   const navigate = useNavigate();
+
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = new FormData(e.target as HTMLFormElement);
@@ -44,14 +45,12 @@ const SignupForm = () => {
         },
       })
       .then((res) => {
-        // console.log(res.data);
         if (res.data.success) {
-          //
-
           emailSignUp(email, password)
             .then((userCredential) => {
               const user = userCredential.user;
               setIsLoading(false);
+              logOut();
 
               api.post("/users", {
                 ...user,
@@ -66,11 +65,11 @@ const SignupForm = () => {
                 displayName: name,
               }).then(() => {
                 Swal.fire({
-                  title: "Signup Sucessfull.",
+                  title: "Signup Sucessfull. Now please login",
                   icon: "success",
                 }).then((result) => {
                   if (result.isConfirmed) {
-                    navigate("/");
+                    navigate("/login");
                   }
                 });
               });
