@@ -75,7 +75,7 @@ const Navbar = () => {
           </ul>
         </div>
         <Link to="/" className="btn btn-ghost text-lg">
-          TSC
+          <img src="/logo3.png" alt="" className="h-8" />
         </Link>
       </div>
 
