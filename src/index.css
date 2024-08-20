@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+  .container-center {
+    @apply px-4 md:px-7 lg:px-10;
+  }
+}
