@@ -3,7 +3,10 @@ import RootLayout from "./pages/RootLayout";
 import Home from "./pages/Home";
 import SignupForm from "./pages/SignUp";
 import LoginForm from "./pages/Login";
-import DashboardLayout from "./pages/DashboardLayout";
+import DashboardLayout from "./pages/Dashboard/DashboardLayout";
+import PrivateRoute from "./pages/PrivateRoute";
+import DashboardProfile from "./pages/Dashboard/DashboardProfile";
+import CreateSession from "./pages/Dashboard/CreateSession";
 
 const router = createBrowserRouter([
   {
@@ -26,10 +29,14 @@ const router = createBrowserRouter([
   },
   {
     path: "dashboard",
-    element: <DashboardLayout />,
+    element: (
+      <PrivateRoute>
+        <DashboardLayout />
+      </PrivateRoute>
+    ),
     children: [
-      { path: "", element: "" },
-      { path: "", element: "" },
+      { path: "", element: <DashboardProfile /> },
+      { path: "create-session", element: <CreateSession /> },
     ],
   },
 ]);
