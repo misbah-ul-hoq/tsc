@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import Swal from "sweetalert2";
 import api from "../../axios/api";
@@ -6,6 +6,7 @@ import api from "../../axios/api";
 const SocialLogin = () => {
   const { googleLogin, githubLogin } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
   return (
     <div>
@@ -31,7 +32,7 @@ const SocialLogin = () => {
                 title: "Google Login Successfull",
                 icon: "success",
               });
-              navigate("/");
+              navigate(location.state ? location.state : "/");
             })
             .catch((error) => {
               Swal.fire({
@@ -73,7 +74,7 @@ const SocialLogin = () => {
                 title: "Github Login Successfull",
                 icon: "success",
               });
-              navigate("/");
+              navigate(location.state ? location.state : "/");
             })
             .catch((error) => {
               Swal.fire({

@@ -28,6 +28,7 @@ const Navbar = () => {
               Swal.fire({
                 title: "Are you sure to logout?",
                 icon: "question",
+                showCancelButton: true,
               }).then((result) => {
                 if (result.isConfirmed) {
                   logOut().then(() => {

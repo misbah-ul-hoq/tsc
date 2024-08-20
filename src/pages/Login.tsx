@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import SocialLogin from "../components/Shared/SocialLogin";
 import { FormEvent, useState } from "react";
 import { useAuth } from "../hooks/useAuth";
@@ -10,6 +10,7 @@ const LoginForm = () => {
   const [isLoading, setLoading] = useState(false);
   const { emailLogin } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
@@ -33,9 +34,7 @@ const LoginForm = () => {
           });
         });
         setLoading(false);
-        if (user) {
-          navigate("/");
-        }
+        navigate(location.state ? location.state : "/");
       })
       .catch((error) => {
         setLoading(false);
