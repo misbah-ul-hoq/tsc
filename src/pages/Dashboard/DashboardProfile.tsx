@@ -5,7 +5,7 @@ const DashboardProfile = () => {
   const { user } = useAuth();
   const { role } = useRole();
   return (
-    <div className="p-4 lg:p-10 space-y-4">
+    <div className="p-4 lg:p-6 space-y-4">
       <img
         src={user?.photoURL || ""}
         alt="User image"

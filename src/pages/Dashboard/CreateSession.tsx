@@ -60,6 +60,7 @@ const CreateSession = () => {
           type="text"
           className="input input-bordered"
           value={user?.displayName || ""}
+          {...register("tutorName", { required: true })}
           readOnly
         />
       </div>
@@ -72,6 +73,7 @@ const CreateSession = () => {
           type="email"
           className="input input-bordered"
           value={user?.email || ""}
+          {...register("tutorEmail", { required: true })}
           readOnly
         />
       </div>
