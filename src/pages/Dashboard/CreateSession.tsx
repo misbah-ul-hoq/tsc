@@ -152,6 +152,7 @@ const CreateSession = () => {
           type="number"
           className="input input-bordered"
           value={0}
+          {...register("registrationFee")}
           readOnly
         />
       </div>
