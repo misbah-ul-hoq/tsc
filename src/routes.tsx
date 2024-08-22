@@ -7,6 +7,8 @@ import DashboardLayout from "./pages/Dashboard/DashboardLayout";
 import PrivateRoute from "./pages/PrivateRoute";
 import DashboardProfile from "./pages/Dashboard/DashboardProfile";
 import CreateSession from "./pages/Dashboard/CreateSession";
+import TutorRoute from "./pages/Dashboard/TutorRoute";
+import ViewSessions from "./pages/Dashboard/ViewSessions";
 
 const router = createBrowserRouter([
   {
@@ -36,7 +38,23 @@ const router = createBrowserRouter([
     ),
     children: [
       { path: "", element: <DashboardProfile /> },
-      { path: "create-session", element: <CreateSession /> },
+      // tutor routes
+      {
+        path: "create-session",
+        element: (
+          <TutorRoute>
+            <CreateSession />
+          </TutorRoute>
+        ),
+      },
+      {
+        path: "view-sessions",
+        element: (
+          <TutorRoute>
+            <ViewSessions />
+          </TutorRoute>
+        ),
+      },
     ],
   },
 ]);

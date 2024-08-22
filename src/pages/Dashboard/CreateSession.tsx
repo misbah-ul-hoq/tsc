@@ -1,16 +1,39 @@
+import Swal from "sweetalert2";
+import api from "../../axios/api";
 import { useAuth } from "../../hooks/useAuth";
 import { useForm } from "react-hook-form";
+import useDocumentTitle from "dynamic-title-react";
 
 const CreateSession = () => {
+  useDocumentTitle("Create Session | TSC");
   const { user } = useAuth();
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
   const onSubmit = (data: unknown) => {
     console.log(data);
+    api
+      .post("/study-session", data)
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.acknowledged) {
+          reset();
+          Swal.fire({
+            title: "Created session successfully.",
+            icon: "success",
+          });
+        }
+      })
+      .catch((err) =>
+        Swal.fire({
+          title: err.message,
+          icon: "error",
+        })
+      );
   };
 
   return (

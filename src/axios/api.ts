@@ -5,4 +5,9 @@ const api = axios.create({
   baseURL: "http://localhost:8080",
 });
 
+api.interceptors.request.use((config) => {
+  config.headers["accessToken"] = localStorage.getItem("accessToken");
+  return config;
+});
+
 export default api;

@@ -21,7 +21,7 @@ const Sidebar = () => {
               <NavLink to="/dashboard/create-session">Create Session</NavLink>
             </li>
             <li className="py-2">
-              <NavLink to="/dashboard/view-session">View all Sessions</NavLink>
+              <NavLink to="/dashboard/view-sessions">View all Sessions</NavLink>
             </li>
             <li className="py-2">
               <NavLink to="/dashboard/upload-materials">
