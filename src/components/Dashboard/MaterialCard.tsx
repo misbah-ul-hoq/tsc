@@ -10,6 +10,7 @@ interface cardProps {
   link: string;
   viewLink: string;
 }
+
 const MaterialCard = ({
   data,
   refetch,
@@ -45,8 +46,6 @@ const MaterialCard = ({
     });
   };
 
-  // update function
-
   return (
     <div className="card card-compact bg-base-100 shadow-xl">
       <figure>
@@ -54,34 +53,10 @@ const MaterialCard = ({
       </figure>
       <div className="card-body">
         <h2 className="card-title">{title}</h2>
-        {/* <p>{de}</p> */}
+
         <div className="card-actions justify-end">
           {/* Open the modal using document.getElementById('ID').showModal() method */}
-          <button
-            className="btn btn-sm btn-primary"
-            onClick={() => {
-              const dialog = document.getElementById(
-                "my_modal_1"
-              ) as HTMLDialogElement;
-              dialog?.showModal();
-            }}
-          >
-            Update
-          </button>
-          <dialog id="my_modal_1" className="modal">
-            <div className="modal-box">
-              <h3 className="font-bold text-lg">Hello!</h3>
-              <p className="py-4">
-                Press ESC key or click the button below to close
-              </p>
-              <div className="modal-action">
-                <form method="dialog">
-                  {/* if there is a button in form, it will close the modal */}
-                  <button className="btn btn-sm btn-warning">Close</button>
-                </form>
-              </div>
-            </div>
-          </dialog>
+          <button className="btn btn-sm btn-primary">Update</button>
 
           {/* delete button */}
           <button

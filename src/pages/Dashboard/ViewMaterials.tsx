@@ -1,5 +1,5 @@
-import MaterialCard from "../../components/Dashboard/MaterialCard";
 import useMaterials from "../../hooks/useMaterials";
+import MaterialCard from "../../components/Dashboard/MaterialCard";
 
 const ViewMaterials = () => {
   const { materials, refetch } = useMaterials();
