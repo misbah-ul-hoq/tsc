@@ -9,6 +9,7 @@ import DashboardProfile from "./pages/Dashboard/DashboardProfile";
 import CreateSession from "./pages/Dashboard/CreateSession";
 import TutorRoute from "./pages/Dashboard/TutorRoute";
 import ViewSessions from "./pages/Dashboard/ViewSessions";
+import UploadMaterials from "./pages/Dashboard/UploadMaterials";
 
 const router = createBrowserRouter([
   {
@@ -52,6 +53,14 @@ const router = createBrowserRouter([
         element: (
           <TutorRoute>
             <ViewSessions />
+          </TutorRoute>
+        ),
+      },
+      {
+        path: "upload-materials",
+        element: (
+          <TutorRoute>
+            <UploadMaterials />
           </TutorRoute>
         ),
       },

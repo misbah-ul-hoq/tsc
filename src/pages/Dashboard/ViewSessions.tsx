@@ -16,6 +16,7 @@ const ViewSessions = () => {
             sessionTitle: string;
             sessionDescription: string;
             status: string;
+            tutorEmail: string;
           }) => (
             <SessionCard key={session._id} data={session} />
           )
