@@ -131,9 +131,12 @@ const SessionCard = ({
             <>
               <button
                 className="btn btn-sm btn-accent"
-                onClick={() =>
-                  document?.getElementById("my_modal_1")?.showModal()
-                }
+                onClick={() => {
+                  const dialog = document.getElementById(
+                    "my_modal_1"
+                  ) as HTMLDialogElement;
+                  dialog.showModal();
+                }}
               >
                 Upload materials
               </button>
