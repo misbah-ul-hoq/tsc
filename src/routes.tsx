@@ -10,6 +10,7 @@ import CreateSession from "./pages/Dashboard/CreateSession";
 import TutorRoute from "./pages/Dashboard/TutorRoute";
 import ViewSessions from "./pages/Dashboard/ViewSessions";
 import UploadMaterials from "./pages/Dashboard/UploadMaterials";
+import ViewMaterials from "./pages/Dashboard/ViewMaterials";
 
 const router = createBrowserRouter([
   {
@@ -61,6 +62,14 @@ const router = createBrowserRouter([
         element: (
           <TutorRoute>
             <UploadMaterials />
+          </TutorRoute>
+        ),
+      },
+      {
+        path: "view-materials",
+        element: (
+          <TutorRoute>
+            <ViewMaterials />
           </TutorRoute>
         ),
       },
