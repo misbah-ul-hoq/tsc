@@ -41,9 +41,9 @@ const SessionCard = ({
   } = useForm<FormValues>();
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
-    console.log(data);
     const { image, link, sessionId, tutorEmail, title } = data;
     const imageFile = image[0];
+    setShowSuccessText(false);
 
     const formData = new FormData();
     formData.append("image", imageFile);

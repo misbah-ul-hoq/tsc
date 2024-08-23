@@ -11,6 +11,8 @@ import TutorRoute from "./pages/Dashboard/TutorRoute";
 import ViewSessions from "./pages/Dashboard/ViewSessions";
 import UploadMaterials from "./pages/Dashboard/UploadMaterials";
 import ViewMaterials from "./pages/Dashboard/ViewMaterials";
+import UpdateMaterial from "./components/Dashboard/UpdateMaterial";
+import api from "./axios/api";
 
 const router = createBrowserRouter([
   {
@@ -70,6 +72,17 @@ const router = createBrowserRouter([
         element: (
           <TutorRoute>
             <ViewMaterials />
+          </TutorRoute>
+        ),
+      },
+      {
+        path: "update-materials/:id",
+        loader: async ({ params }) => {
+          return api.get(`/session-materials/${params.id}`);
+        },
+        element: (
+          <TutorRoute>
+            <UpdateMaterial />
           </TutorRoute>
         ),
       },

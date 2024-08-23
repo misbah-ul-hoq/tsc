@@ -1,6 +1,7 @@
 import Swal from "sweetalert2";
 import api from "../../axios/api";
 import { RefetchOptions, QueryObserverResult } from "@tanstack/react-query";
+import { Link } from "react-router-dom";
 
 interface cardProps {
   _id: string;
@@ -56,7 +57,12 @@ const MaterialCard = ({
 
         <div className="card-actions justify-end">
           {/* Open the modal using document.getElementById('ID').showModal() method */}
-          <button className="btn btn-sm btn-primary">Update</button>
+          <Link
+            to={`/dashboard/update-materials/${_id}`}
+            className="btn btn-sm btn-primary"
+          >
+            Update
+          </Link>
 
           {/* delete button */}
           <button
