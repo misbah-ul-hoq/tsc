@@ -1,12 +1,12 @@
 const Banner = () => {
   return (
-    <section className="banner-section items-center container-center grid md:grid-cols-2 gap-5 lg:gap-10">
+    <section className="banner-section items-center container-center grid lg:grid-cols-2 gap-5 lg:gap-10">
       <div className="left-content">
         <div className="space-y-4 h-full">
-          <h2 className="text-3xl lg:text-5xl font-bold text-accent leading-loose">
+          <h2 className="text-3xl lg:text-5xl font-bold text-accent lg:leading-normal">
             Empowering Education: Together We Achieve More!
           </h2>
-          <h3 className="text-2xl font-semibold">
+          <h3 className="text-xl lg:text-2xl font-semibold">
             Join Our Community of Passionate Teachers and Eager Learners
           </h3>
           <p>

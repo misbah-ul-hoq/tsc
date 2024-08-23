@@ -1,3 +1,6 @@
+import Swal from "sweetalert2";
+import api from "../../axios/api";
+
 interface dataProps {
   _id: string;
   sessionTitle: string;
@@ -7,7 +10,17 @@ interface dataProps {
 
 const SessionCard = ({ data }: { data: dataProps }) => {
   const { _id, sessionTitle, sessionDescription, status } = data;
-  const handleApply = () => {};
+  const handleApply = () => {
+    api.patch(`/study-session/${_id}`, { status: "pending" }).then((res) => {
+      console.log(res.data);
+      if (res.data.modifiedCount) {
+        Swal.fire({
+          title: "Re apply successfully",
+          icon: "success",
+        });
+      }
+    });
+  };
   return (
     <div className="card card-compact bg-base-100 shadow-xl">
       <div className="card-body">
@@ -26,7 +39,12 @@ const SessionCard = ({ data }: { data: dataProps }) => {
             {status}
           </button>
           {status == "rejected" && (
-            <button className="btn btn-sm btn-secondary" onClick={handleApply}>
+            <button
+              className="btn btn-sm btn-secondary"
+              onClick={() => {
+                handleApply();
+              }}
+            >
               Re apply?
             </button>
           )}
