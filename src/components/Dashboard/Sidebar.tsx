@@ -15,7 +15,7 @@ const Sidebar = () => {
       {/* These links are  for tutors */}
       <div>
         {role == "tutor" && (
-          <ul className="space-y-1 pt-3">
+          <ul className="space-y-1 pt-3 menu">
             <li className="mb-5">
               <Logo />
             </li>
@@ -38,6 +38,24 @@ const Sidebar = () => {
       </div>
 
       {/* Admin links */}
+      <div>
+        {role == "admin" && (
+          <ul className="space-y-1 pt-3 menu">
+            <li className="mb-5">
+              <Logo />
+            </li>
+            <li className="py-2">
+              <NavLink to="/dashboard/view-users">View All Users</NavLink>
+            </li>
+            <li className="py-2">
+              <NavLink to="/dashboard/view-sessions">View all Sessions</NavLink>
+            </li>
+            <li className="py-2">
+              <NavLink to="/dashboard/view-materials">View Materials</NavLink>
+            </li>
+          </ul>
+        )}
+      </div>
     </aside>
   );
 };

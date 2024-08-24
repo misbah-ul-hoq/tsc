@@ -13,6 +13,8 @@ import UploadMaterials from "./pages/Dashboard/UploadMaterials";
 import ViewMaterials from "./pages/Dashboard/ViewMaterials";
 import UpdateMaterial from "./components/Dashboard/UpdateMaterial";
 import api from "./axios/api";
+import AdminRoute from "./pages/Dashboard/AdminRoute";
+import ViewUsers from "./pages/Dashboard/Admin/ViewUser";
 
 const router = createBrowserRouter([
   {
@@ -84,6 +86,16 @@ const router = createBrowserRouter([
           <TutorRoute>
             <UpdateMaterial />
           </TutorRoute>
+        ),
+      },
+
+      // admin routes
+      {
+        path: "view-users",
+        element: (
+          <AdminRoute>
+            <ViewUsers />
+          </AdminRoute>
         ),
       },
     ],
