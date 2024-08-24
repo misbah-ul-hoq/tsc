@@ -10,6 +10,8 @@ const Sidebar = () => {
 
   return (
     <aside className="bg-base-200 px-5 min-h-screen">
+      {/* student links */}
+
       {/* These links are  for tutors */}
       <div>
         {role == "tutor" && (
@@ -34,6 +36,8 @@ const Sidebar = () => {
           </ul>
         )}
       </div>
+
+      {/* Admin links */}
     </aside>
   );
 };

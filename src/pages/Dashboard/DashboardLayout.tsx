@@ -6,11 +6,11 @@ import useDocumentTitle from "dynamic-title-react";
 const DashboardLayout = () => {
   useDocumentTitle("Dashboard | Teacher Student Center");
   return (
-    <div className="grid grid-cols-12 h-screen overflow-auto">
-      <div className="col-span-2 overflow-auto min-h-screen">
+    <div className="grid lg:grid-cols-12 h-screen overflow-auto">
+      <div className="lg:col-span-2 hidden lg:block overflow-auto min-h-screen">
         <Sidebar />
       </div>
-      <div className="col-span-10 overflow-auto min-h-screen">
+      <div className="lg:col-span-10 overflow-auto min-h-">
         <DashboardNav />
         <Outlet />
       </div>

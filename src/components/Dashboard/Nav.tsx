@@ -1,5 +1,7 @@
+import { Link } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import useRole from "../../hooks/useRole";
+import Sidebar from "./Sidebar";
 
 const DashboardNav = () => {
   const { user } = useAuth();
@@ -14,8 +16,30 @@ const DashboardNav = () => {
     );
   return (
     <div className="navbar pl-0 bg-neutral text-neutral-content pr-3">
+      <div className="drawer lg:hidden">
+        <input id="my-drawer" type="checkbox" className="drawer-toggle" />
+        <div className="drawer-content ml-2">
+          {/* Page content here */}
+          <label htmlFor="my-drawer" className="btn btn-primary drawer-button">
+            <img src="/menu.svg" className="h-10" />
+          </label>
+        </div>
+        <div className="drawer-side z-10">
+          <label
+            htmlFor="my-drawer"
+            aria-label="close sidebar"
+            className="drawer-overlay"
+          ></label>
+          <ul className="menu bg-base-200 text-base-content min-h-full p-4">
+            {/* Sidebar content here */}
+            <Sidebar />
+          </ul>
+        </div>
+      </div>
       <div className="flex-1">
-        <button className="btn btn-ghost text-xl">Dashboard</button>
+        <Link to="/dashboard" className="lg:btn lg:btn-ghost text-xl hidden">
+          Dashboard
+        </Link>
       </div>
       <div className="flex-none">
         <div className="flex items-center gap-2">

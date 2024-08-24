@@ -6,17 +6,23 @@ const Navbar = () => {
   const { user, logOut } = useAuth();
   const navLinks = (
     <>
-      <li>
-        <NavLink to="/">Home</NavLink>
+      <li className="">
+        <NavLink to="/" className="py-3 lg:py-2">
+          Home
+        </NavLink>
       </li>
 
       {!user && (
         <>
           <li>
-            <NavLink to="/signup">SignUp</NavLink>
+            <NavLink to="/signup" className="py-3 lg:py-2">
+              SignUp
+            </NavLink>
           </li>
           <li>
-            <NavLink to="/login">Login</NavLink>
+            <NavLink to="/login" className="py-3 lg:py-2">
+              Login
+            </NavLink>
           </li>
         </>
       )}
@@ -38,10 +44,12 @@ const Navbar = () => {
               });
             }}
           >
-            <a>Logout</a>
+            <a className="py-3 lg:py-2">Logout</a>
           </li>
           <li>
-            <NavLink to="/dashboard">Dashboard</NavLink>
+            <NavLink to="/dashboard" className="py-3 lg:py-2">
+              Dashboard
+            </NavLink>
           </li>
         </>
       )}
@@ -70,7 +78,7 @@ const Navbar = () => {
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow space-y-2"
           >
             {navLinks}
           </ul>
