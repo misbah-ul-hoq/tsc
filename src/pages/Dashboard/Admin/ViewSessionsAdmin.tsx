@@ -1,18 +1,65 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import useSessions from "../../../hooks/useSessions";
 import sessionType from "../../../types/sessionType";
+import api from "../../../axios/api";
+import Swal from "sweetalert2";
 
 const ViewSessionsAdmin = () => {
-  const { sessions } = useSessions();
+  const { sessions, refetch } = useSessions();
   const [currentSession, setCurrentSession] = useState<sessionType | null>(
     null
   );
   const [isPaid, setIsPaid] = useState(false);
-  console.log(currentSession);
+  // console.log(currentSession);
   const handleApprove = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const price = parseFloat(event.currentTarget.price.value);
+    let price;
+    const priceInput = event.currentTarget.price;
+    // const priceInput = parseFloat(event.currentTarget.price.value);
+    if (!priceInput) {
+      price = 0;
+    } else price = parseFloat(priceInput.value);
     console.log(price);
+    api
+      .patch(`/study-session/${currentSession?._id}`, {
+        registrationFee: price,
+        status: "approved",
+      })
+      .then((res) => {
+        if (res.data.modifiedCount) {
+          Swal.fire({
+            title: "Updated successfully",
+            icon: "success",
+          });
+          refetch();
+        }
+      })
+      .catch((err) => {
+        Swal.fire({
+          title: err.message,
+          icon: "error",
+        });
+      });
+  };
+
+  const handleReject = () => {
+    const id = currentSession?._id;
+    console.log(id);
+    if (id) {
+      api
+        .patch(`/study-session/${id}`, {
+          status: "rejected",
+        })
+        .then((res) => {
+          if (res.data.modifiedCount) {
+            Swal.fire({
+              title: "Rejected!",
+              icon: "success",
+            });
+            refetch();
+          }
+        });
+    }
   };
   return (
     <section className="p-3">
@@ -80,7 +127,7 @@ const ViewSessionsAdmin = () => {
                                 }}
                               >
                                 <option defaultValue="nothing">
-                                  Is this session free or paid?
+                                  Is this session free or paid (Select)?
                                 </option>
                                 <option value="free">Free</option>
                                 <option value="paid">Paid</option>
@@ -121,7 +168,11 @@ const ViewSessionsAdmin = () => {
                       </dialog>
                       <button
                         className="btn btn-sm btn-warning"
-                        onClick={() => setCurrentSession(session)}
+                        onClick={() => {
+                          setCurrentSession(session);
+                          // setTimeout(handleReject, 500);
+                          handleReject();
+                        }}
                       >
                         Reject
                       </button>
