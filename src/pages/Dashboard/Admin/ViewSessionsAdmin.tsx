@@ -1,5 +1,157 @@
+import { ChangeEvent, FormEvent, useState } from "react";
+import useSessions from "../../../hooks/useSessions";
+import sessionType from "../../../types/sessionType";
+
 const ViewSessionsAdmin = () => {
-  return <section className="p-3">ViewSessionsAdmin</section>;
+  const { sessions } = useSessions();
+  const [currentSession, setCurrentSession] = useState<sessionType | null>(
+    null
+  );
+  const [isPaid, setIsPaid] = useState(false);
+  console.log(currentSession);
+  const handleApprove = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const price = parseFloat(event.currentTarget.price.value);
+    console.log(price);
+  };
+  return (
+    <section className="p-3">
+      <h2 className="text-3xl font-semibold">View all sessions</h2>
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {sessions.toReversed().map((session: sessionType) => {
+          const { _id, sessionTitle, sessionDescription, status, tutorEmail } =
+            session;
+          return (
+            <div key={_id} className="card card-compact bg-base-100 shadow-xl">
+              <div className="card-body">
+                <h2 className="card-title">
+                  {sessionTitle}{" "}
+                  <button
+                    className={`badge ${
+                      status == "approved"
+                        ? "badge-success"
+                        : status == "rejected"
+                        ? "badge-error"
+                        : "badge-primary"
+                    } `}
+                  >
+                    {status}
+                  </button>
+                </h2>
+                <p>{sessionDescription}</p>
+                <p>{tutorEmail}</p>
+                <div className="card-actions justify-end">
+                  {/* This two buttons are responsible for approving and rejecting pending sessions */}
+                  {status == "pending" && (
+                    <>
+                      {/* Open the modal using document.getElementById('ID').showModal() method */}
+                      <button
+                        className="btn btn-sm btn-accent"
+                        onClick={() => {
+                          const modal = document.getElementById(
+                            "my_modal_1"
+                          ) as HTMLDialogElement;
+                          modal?.showModal();
+                          setCurrentSession(session);
+                          setIsPaid(false);
+                        }}
+                      >
+                        Approve
+                      </button>
+                      <dialog id="my_modal_1" className="modal">
+                        <div className="modal-box">
+                          <h3 className="font-bold text-lg">
+                            Tell us details {currentSession?.sessionTitle}
+                          </h3>
+                          <div className="modal-action mt-3 flex-col gap-2">
+                            <form
+                              method="dialog"
+                              onSubmit={handleApprove}
+                              className="flex flex-col gap-3"
+                            >
+                              <select
+                                className="select select-bordered w-full"
+                                onChange={(
+                                  event: ChangeEvent<HTMLSelectElement>
+                                ) => {
+                                  console.log(event.target.value);
+                                  if (event.target.value == "paid")
+                                    setIsPaid(true);
+                                }}
+                              >
+                                <option defaultValue="nothing">
+                                  Is this session free or paid?
+                                </option>
+                                <option value="free">Free</option>
+                                <option value="paid">Paid</option>
+                              </select>
+                              {isPaid && (
+                                <input
+                                  type="number"
+                                  name="price"
+                                  placeholder="Enter price here"
+                                  className="input input-bordered input-primary w-full"
+                                />
+                              )}
+                              <button className="btn btn-primary btn-sm">
+                                Approve
+                              </button>
+                            </form>
+                            <form
+                              method="dialog"
+                              className="justify-self-end self-end"
+                              onSubmit={() => {
+                                setCurrentSession(null);
+                                setIsPaid(false);
+                              }}
+                            >
+                              {/* if there is a button in form, it will close the modal */}
+                              <button
+                                className="btn"
+                                onClick={() => {
+                                  setCurrentSession(null);
+                                  setIsPaid(false);
+                                }}
+                              >
+                                Close
+                              </button>
+                            </form>
+                          </div>
+                        </div>
+                      </dialog>
+                      <button
+                        className="btn btn-sm btn-warning"
+                        onClick={() => setCurrentSession(session)}
+                      >
+                        Reject
+                      </button>
+                    </>
+                  )}
+                  {/* this two buttons are responsible for updating and deleting approved sessions */}
+                  {status == "approved" && (
+                    <>
+                      <button
+                        className="btn btn-sm btn-accent"
+                        onClick={() => setCurrentSession(session)}
+                      >
+                        Update
+                      </button>
+                      <button
+                        className="btn btn-sm btn-warning"
+                        onClick={() => setCurrentSession(session)}
+                      >
+                        Delete
+                      </button>
+                    </>
+                  )}
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </section>
+  );
 };
 
 export default ViewSessionsAdmin;

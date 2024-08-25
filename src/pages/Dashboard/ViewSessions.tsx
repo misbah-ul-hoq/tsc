@@ -1,26 +1,23 @@
 import useDocumentTitle from "dynamic-title-react";
 import useSessions from "../../hooks/useSessions";
 import SessionCard from "../../components/Dashboard/SessionCard";
+import { useAuth } from "../../hooks/useAuth";
+import sessionType from "../../types/sessionType";
 
 const ViewSessions = () => {
   useDocumentTitle("View All Sessions | TSC");
   // const [selectedTab, setSelectedTab] = useState("approved");
-  const { sessions } = useSessions();
+  // here this functionality is added so that the tutor can see only his sessions, not others sessions
+  const { user } = useAuth();
+  const email = user?.email as string;
+  const { sessions } = useSessions("", email);
 
   return (
     <section className="p-4 lg:p-6">
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {sessions.map(
-          (session: {
-            _id: string;
-            sessionTitle: string;
-            sessionDescription: string;
-            status: string;
-            tutorEmail: string;
-          }) => (
-            <SessionCard key={session._id} data={session} />
-          )
-        )}
+        {sessions.map((session: sessionType) => (
+          <SessionCard key={session._id} data={session} />
+        ))}
       </div>
     </section>
   );

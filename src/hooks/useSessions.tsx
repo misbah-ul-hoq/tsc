@@ -1,14 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
-import { useAuth } from "./useAuth";
 import api from "../axios/api";
 
-const useSessions = (status = "") => {
-  const { user } = useAuth();
+const useSessions = (status = "", email = "") => {
   const { data: sessions = [], refetch } = useQuery({
     queryKey: ["sessions"],
     queryFn: async () => {
       const res = await api.get(
-        `/study-session?email=${user ? user.email : ""}&status=${status}`
+        `/study-session?email=${email}&status=${status}`
       );
       return res.data;
     },
