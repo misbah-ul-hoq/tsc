@@ -48,10 +48,14 @@ const Sidebar = () => {
               <NavLink to="/dashboard/view-users">View All Users</NavLink>
             </li>
             <li className="py-2">
-              <NavLink to="/dashboard/view-sessions">View all Sessions</NavLink>
+              <NavLink to="/dashboard/view-all-sessions">
+                View all Sessions
+              </NavLink>
             </li>
             <li className="py-2">
-              <NavLink to="/dashboard/view-materials">View Materials</NavLink>
+              <NavLink to="/dashboard/view-all-materials">
+                View Materials
+              </NavLink>
             </li>
           </ul>
         )}

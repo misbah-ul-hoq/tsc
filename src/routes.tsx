@@ -15,6 +15,7 @@ import UpdateMaterial from "./components/Dashboard/UpdateMaterial";
 import api from "./axios/api";
 import AdminRoute from "./pages/Dashboard/AdminRoute";
 import ViewUsers from "./pages/Dashboard/Admin/ViewUser";
+import ViewSessionsAdmin from "./pages/Dashboard/Admin/ViewSessionsAdmin";
 
 const router = createBrowserRouter([
   {
@@ -95,6 +96,14 @@ const router = createBrowserRouter([
         element: (
           <AdminRoute>
             <ViewUsers />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "view-all-sessions",
+        element: (
+          <AdminRoute>
+            <ViewSessionsAdmin />
           </AdminRoute>
         ),
       },
