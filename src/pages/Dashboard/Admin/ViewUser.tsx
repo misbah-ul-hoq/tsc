@@ -1,28 +1,44 @@
 import { useQuery } from "@tanstack/react-query";
 import api from "../../../axios/api";
-import { FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { useAuth } from "../../../hooks/useAuth";
 import Swal from "sweetalert2";
 
 interface User {
   _id: string;
   photoURL: string;
+  displayName: string;
   email: string;
   role: string;
 }
 
 const ViewUsers = () => {
   const { user } = useAuth();
-  const { data: users, refetch } = useQuery({
+  const [users, setUsers] = useState([]);
+  const { data, refetch } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
-      const response = await api.get(`/users?email=${user?.email}`);
-      return response.data;
+      const response = await api.get(`/users`);
+      setUsers(
+        response.data.filter((item: User) => item.email !== user?.email)
+      );
+      return response.data.filter((item: User) => item.email !== user?.email);
     },
   });
 
   // Use the User type for the selectedUser state
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
+
+  const handleSearch = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const searchText = event.currentTarget.search.value;
+    // console.log(searchText);
+    api.get(`/users?search=${searchText}`).then((response) => {
+      setUsers(
+        response.data.filter((item: User) => item.email !== user?.email)
+      );
+    });
+  };
 
   const handleUpdateClick = (user: User) => {
     setSelectedUser(user);
@@ -58,11 +74,27 @@ const ViewUsers = () => {
 
   return (
     <section className="p-3">
+      <form className="join w-full" onSubmit={handleSearch}>
+        <input
+          type="text"
+          name="search"
+          placeholder="Search by name or email"
+          className="input input-bordered join-item w-full block focus:outline-none"
+          onChange={(e: ChangeEvent<HTMLInputElement>) => {
+            if (!e.target.value) {
+              setUsers(data);
+            }
+          }}
+        />
+        <button className="btn btn-primary join-item">Search</button>
+      </form>
+
       <div className="overflow-x-auto">
         <table className="table w-full">
           <thead>
             <tr>
               <th>Image</th>
+              <th>Name</th>
               <th>Email</th>
               <th>Role</th>
               <th>Actions</th>
@@ -78,6 +110,7 @@ const ViewUsers = () => {
                     className="w-12 h-12 rounded-full"
                   />
                 </td>
+                <td>{user.displayName}</td>
                 <td>{user.email}</td>
                 <td>{user.role}</td>
                 <td>
