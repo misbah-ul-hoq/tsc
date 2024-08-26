@@ -61,6 +61,19 @@ const ViewSessionsAdmin = () => {
         });
     }
   };
+
+  const handleDelete = () => {
+    api.delete(`/study-session/${currentSession?._id}`).then((res) => {
+      if (res.data.deletedCount) {
+        Swal.fire({
+          title: "Deleted successfully",
+          icon: "success",
+        });
+        refetch();
+      }
+    });
+  };
+
   return (
     <section className="p-3">
       <h2 className="text-3xl font-semibold">View all sessions</h2>
@@ -200,7 +213,21 @@ const ViewSessionsAdmin = () => {
                       </button>
                       <button
                         className="btn btn-sm btn-warning"
-                        onClick={() => setCurrentSession(session)}
+                        onClick={() => {
+                          setCurrentSession(session);
+                          Swal.fire({
+                            title: "Are you sure to Delete it?",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#3085d6",
+                            cancelButtonColor: "#d33",
+                            confirmButtonText: "Yes, delete it!",
+                          }).then((result) => {
+                            if (result.isConfirmed) {
+                              handleDelete();
+                            }
+                          });
+                        }}
                       >
                         Delete
                       </button>
