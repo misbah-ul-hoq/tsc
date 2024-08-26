@@ -4,6 +4,7 @@ interface sessionType {
   sessionDescription: string;
   status: string;
   tutorEmail: string;
+  registrationFee?: number;
 }
 
 export default sessionType;

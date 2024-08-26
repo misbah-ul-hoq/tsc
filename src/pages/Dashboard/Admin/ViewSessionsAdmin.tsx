@@ -62,6 +62,26 @@ const ViewSessionsAdmin = () => {
     }
   };
 
+  const handleUpdate = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const update = event.currentTarget.updateFee.value;
+    const updatePrice = parseFloat(update);
+
+    api
+      .patch(`/study-session/${currentSession?._id}`, {
+        registrationFee: updatePrice,
+      })
+      .then((res) => {
+        if (res.data.modifiedCount) {
+          Swal.fire({
+            titleText: "Updated successfully",
+            icon: "success",
+          });
+          refetch();
+        }
+      });
+  };
+
   const handleDelete = () => {
     api.delete(`/study-session/${currentSession?._id}`).then((res) => {
       if (res.data.deletedCount) {
@@ -100,6 +120,7 @@ const ViewSessionsAdmin = () => {
                 </h2>
                 <p>{sessionDescription}</p>
                 <p>{tutorEmail}</p>
+                {status == "approved" && <p>Fee: {session.registrationFee}</p>}
                 <div className="card-actions justify-end">
                   {/* This two buttons are responsible for approving and rejecting pending sessions */}
                   {status == "pending" && (
@@ -183,7 +204,6 @@ const ViewSessionsAdmin = () => {
                         className="btn btn-sm btn-warning"
                         onClick={() => {
                           setCurrentSession(session);
-                          // setTimeout(handleReject, 500);
                           Swal.fire({
                             title: "Are you sure?",
                             icon: "warning",
@@ -207,7 +227,13 @@ const ViewSessionsAdmin = () => {
                     <>
                       <button
                         className="btn btn-sm btn-accent"
-                        onClick={() => setCurrentSession(session)}
+                        onClick={() => {
+                          const modal = document.getElementById(
+                            "my_modal_2"
+                          ) as HTMLDialogElement;
+                          modal?.showModal();
+                          setCurrentSession(session);
+                        }}
                       >
                         Update
                       </button>
@@ -233,6 +259,36 @@ const ViewSessionsAdmin = () => {
                       </button>
                     </>
                   )}
+
+                  {/* modal for updating approving session's data */}
+                  <dialog id="my_modal_2" className="modal">
+                    <div className="modal-box">
+                      <h3 className="font-bold text-lg">
+                        Update {currentSession?.sessionTitle}
+                      </h3>
+                      <div className="modal-action flex-col">
+                        <form
+                          onSubmit={handleUpdate}
+                          className="flex flex-col gap-3"
+                        >
+                          <input
+                            type="text"
+                            name="updateFee"
+                            placeholder={JSON.stringify(
+                              currentSession?.registrationFee
+                            )}
+                            defaultValue={currentSession?.registrationFee}
+                            className="input input-bordered block"
+                          />
+                          <button className="btn btn-secondary">Update</button>
+                        </form>
+                        <form method="dialog" className="mt-4 flex justify-end">
+                          {/* if there is a button in form, it will close the modal */}
+                          <button className="btn">Close</button>
+                        </form>
+                      </div>
+                    </div>
+                  </dialog>
                 </div>
               </div>
             </div>
