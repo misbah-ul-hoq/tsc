@@ -8,7 +8,9 @@ const useMaterials = (showAll = false) => {
     queryKey: ["materials"],
     queryFn: async () => {
       const res = await api.get(
-        `/session-materials${!showAll && "?email="}${user ? user.email : ""}`
+        `/session-materials${!showAll ? "?email=" : ""}${
+          !showAll ? (user ? user.email : "") : ""
+        }`
       );
       return res.data;
     },

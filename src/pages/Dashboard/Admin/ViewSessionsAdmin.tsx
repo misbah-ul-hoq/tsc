@@ -96,7 +96,7 @@ const ViewSessionsAdmin = () => {
 
   return (
     <section className="p-3">
-      <h2 className="text-3xl font-semibold">View all sessions</h2>
+      <h2 className="text-3xl font-semibold mb-3">View all sessions</h2>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {sessions.toReversed().map((session: sessionType) => {
           const { _id, sessionTitle, sessionDescription, status, tutorEmail } =

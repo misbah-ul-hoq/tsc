@@ -16,6 +16,7 @@ import api from "./axios/api";
 import AdminRoute from "./pages/Dashboard/AdminRoute";
 import ViewUsers from "./pages/Dashboard/Admin/ViewUser";
 import ViewSessionsAdmin from "./pages/Dashboard/Admin/ViewSessionsAdmin";
+import ViewAllMaterialsAdmin from "./pages/Dashboard/Admin/ViewAllMaterialsAdmin";
 
 const router = createBrowserRouter([
   {
@@ -104,6 +105,14 @@ const router = createBrowserRouter([
         element: (
           <AdminRoute>
             <ViewSessionsAdmin />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "view-all-materials",
+        element: (
+          <AdminRoute>
+            <ViewAllMaterialsAdmin />
           </AdminRoute>
         ),
       },
