@@ -7,6 +7,8 @@ interface sessionType {
   tutorName: string;
   registrationStartDate: string;
   registrationEndDate: string;
+  classStartDate: string;
+  classEndDate: string;
   registrationFee?: number;
 }
 
