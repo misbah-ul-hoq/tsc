@@ -10,13 +10,13 @@ const ViewSessions = () => {
   // here this functionality is added so that the tutor can see only his sessions, not others sessions
   const { user } = useAuth();
   const email = user?.email as string;
-  const { sessions } = useSessions("", email);
+  const { sessions, refetch } = useSessions("", email);
 
   return (
     <section className="p-4 lg:p-6">
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {sessions.map((session: sessionType) => (
-          <SessionCard key={session._id} data={session} />
+          <SessionCard key={session._id} data={session} refetch={refetch} />
         ))}
       </div>
     </section>

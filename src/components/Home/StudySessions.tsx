@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import useSessions from "../../hooks/useSessions";
 import sessionType from "../../types/sessionType";
+
 function isCurrentDateSmallerOrEqual(targetDate: string) {
   const currentDate = new Date();
   const givenDate = new Date(targetDate);
@@ -12,17 +13,13 @@ function isCurrentDateSmallerOrEqual(targetDate: string) {
   return currentDate <= givenDate;
 }
 
-// Example usage
-const targetDate = "2024-08-24";
-console.log(isCurrentDateSmallerOrEqual(targetDate)); // true or false depending on the current date
-
 const Study = () => {
   const { sessions } = useSessions("approved");
   return (
     <section className="study-card-wrapper container-center">
       <h2 className="text-3xl font-bold text-center mb-5">Sessions</h2>
       <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-        {sessions.map((session: sessionType) => {
+        {sessions.slice(0, 6).map((session: sessionType) => {
           const {
             _id,
             sessionTitle,
@@ -42,10 +39,16 @@ const Study = () => {
                 <p>Registarion ends at: {registrationEndDate}</p>
                 <div className="card-actions justify-end">
                   {isCurrentDateSmallerOrEqual(registrationEndDate) ? (
-                    <button className="btn btn-sm btn-success">Ongoing</button>
+                    <button className="btn btn-success">Ongoing</button>
                   ) : (
-                    <button className="btn btn-sm btn-warning">Closed</button>
+                    <button className="btn btn-warning">Closed</button>
                   )}
+                  <Link
+                    className="btn btn-primary"
+                    to={`/study-session/${_id}`}
+                  >
+                    Read More
+                  </Link>
                 </div>
               </div>
             </div>

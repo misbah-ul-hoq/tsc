@@ -3,6 +3,7 @@ import api from "../../axios/api";
 import { SubmitHandler, useForm } from "react-hook-form";
 import axios from "axios";
 import { useState } from "react";
+import { RefetchOptions, QueryObserverResult } from "@tanstack/react-query";
 
 interface dataProps {
   _id: string;
@@ -24,9 +25,13 @@ type FormValues = {
 const SessionCard = ({
   data,
   showUploadMaterialsBtn,
+  refetch,
 }: {
   data: dataProps;
   showUploadMaterialsBtn?: boolean;
+  refetch: (
+    options?: RefetchOptions
+  ) => Promise<QueryObserverResult<unknown, Error>>;
 }) => {
   const { _id, sessionTitle, sessionDescription, status, tutorEmail } = data;
 
@@ -91,6 +96,7 @@ const SessionCard = ({
           title: "Re apply successfully",
           icon: "success",
         });
+        refetch();
       }
     });
   };

@@ -17,6 +17,8 @@ import AdminRoute from "./pages/Dashboard/AdminRoute";
 import ViewUsers from "./pages/Dashboard/Admin/ViewUser";
 import ViewSessionsAdmin from "./pages/Dashboard/Admin/ViewSessionsAdmin";
 import ViewAllMaterialsAdmin from "./pages/Dashboard/Admin/ViewAllMaterialsAdmin";
+import Study from "./pages/StudySessions";
+import SessionDetails from "./pages/SessionDetails";
 
 const router = createBrowserRouter([
   {
@@ -34,6 +36,18 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <LoginForm />,
+      },
+      {
+        path: "/study-sessions",
+        element: <Study />,
+      },
+      {
+        path: "/study-session/:id",
+        element: (
+          <PrivateRoute>
+            <SessionDetails />
+          </PrivateRoute>
+        ),
       },
     ],
   },
