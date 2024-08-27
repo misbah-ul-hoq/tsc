@@ -4,6 +4,9 @@ interface sessionType {
   sessionDescription: string;
   status: string;
   tutorEmail: string;
+  tutorName: string;
+  registrationStartDate: string;
+  registrationEndDate: string;
   registrationFee?: number;
 }
 

@@ -11,6 +11,11 @@ const Navbar = () => {
           Home
         </NavLink>
       </li>
+      <li className="">
+        <NavLink to="/study-sessions" className="py-3 lg:py-2">
+          Sessions
+        </NavLink>
+      </li>
 
       {!user && (
         <>
@@ -29,6 +34,12 @@ const Navbar = () => {
 
       {user && (
         <>
+          <li>
+            <NavLink to="/dashboard" className="py-3 lg:py-2">
+              Dashboard
+            </NavLink>
+          </li>
+
           <li
             onClick={() => {
               Swal.fire({
@@ -45,11 +56,6 @@ const Navbar = () => {
             }}
           >
             <a className="py-3 lg:py-2">Logout</a>
-          </li>
-          <li>
-            <NavLink to="/dashboard" className="py-3 lg:py-2">
-              Dashboard
-            </NavLink>
           </li>
         </>
       )}
