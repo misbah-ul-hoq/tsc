@@ -11,8 +11,33 @@ const Sidebar = () => {
   return (
     <aside className="bg-base-200 px-5 min-h-screen">
       {/* student links */}
+      <div>
+        {role == "student" && (
+          <ul className="space-y-1 pt-3 menu">
+            <li className="mb-5">
+              <Logo />
+            </li>
+            <li className="py-2">
+              <NavLink to="/dashboard/view-booked-session">
+                View booked Sessions
+              </NavLink>
+            </li>
+            <li className="py-2">
+              <NavLink to="/dashboard/create-note">Create Note</NavLink>
+            </li>
+            <li className="py-2">
+              <NavLink to="/dashboard/manage-notes">Manage Notes</NavLink>
+            </li>
+            <li className="py-2">
+              <NavLink to="/dashboard/view-study-materials">
+                View Materials
+              </NavLink>
+            </li>
+          </ul>
+        )}
+      </div>
 
-      {/* These links are  for tutors */}
+      {/*  Tutor Links */}
       <div>
         {role == "tutor" && (
           <ul className="space-y-1 pt-3 menu">

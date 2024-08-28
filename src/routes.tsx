@@ -19,6 +19,8 @@ import ViewSessionsAdmin from "./pages/Dashboard/Admin/ViewSessionsAdmin";
 import ViewAllMaterialsAdmin from "./pages/Dashboard/Admin/ViewAllMaterialsAdmin";
 import Study from "./pages/StudySessions";
 import SessionDetails from "./pages/SessionDetails";
+import ViewBookedSessions from "./pages/Dashboard/Student/ViewBookedSessions";
+import StudentRoute from "./pages/Dashboard/StudentRoute";
 
 const router = createBrowserRouter([
   {
@@ -61,6 +63,15 @@ const router = createBrowserRouter([
     ),
     children: [
       { path: "", element: <DashboardProfile /> },
+      // student routes
+      {
+        path: "view-booked-session",
+        element: (
+          <StudentRoute>
+            <ViewBookedSessions />
+          </StudentRoute>
+        ),
+      },
       // tutor routes
       {
         path: "create-session",
