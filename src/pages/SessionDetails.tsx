@@ -35,7 +35,21 @@ const SessionDetails = () => {
 
   const handleFreeRegister = () => {
     api
-      .post(`/booked-sessions`, { sessionId: _id, ...data })
+      .post(`/booked-sessions`, {
+        sessionId: _id,
+        sessionTitle,
+        sessionDescription,
+        tutorEmail,
+        tutorName,
+        registrationStartDate,
+        registrationEndDate,
+        classStartDate,
+        classEndDate,
+        registrationFee,
+        sessionDuration,
+        studentName: user?.displayName,
+        studentEmail: user?.email,
+      })
       .then((res) => {
         if (res.data.acknowledged) {
           Swal.fire({
