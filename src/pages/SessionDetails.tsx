@@ -6,16 +6,16 @@ import { isCurrentDateSmallerOrEqual } from "../helpers/functions";
 import { useAuth } from "../hooks/useAuth";
 import api from "../axios/api";
 import Swal from "sweetalert2";
+import { AxiosError } from "axios";
 
 const SessionDetails = () => {
   const params = useParams();
   const { role } = useRole();
   const { user } = useAuth();
-  console.log(params.id);
+
   const { data } = useSession(params.id as string);
   useDocumentTitle("Details Page");
 
-  console.log(data);
   if (!data) return <span className="loading loading-dots loading-lg"></span>;
 
   const {
@@ -58,9 +58,14 @@ const SessionDetails = () => {
           });
         }
       })
-      .catch((err) => {
+      .catch((err: AxiosError) => {
+        console.log(err.response);
+
         Swal.fire({
-          title: err.message,
+          title:
+            err.response?.status == 409
+              ? "You have already applied for this session"
+              : err.message,
           icon: "error",
         });
       });
