@@ -15,11 +15,11 @@ const SessionDetails = () => {
   if (!data) return <span className="loading loading-dots loading-lg"></span>;
 
   const {
-    _id,
+    ///_id,
     sessionTitle,
     sessionDescription,
-    status,
-    tutorEmail,
+    //status,
+    //tutorEmail,
     tutorName,
     registrationStartDate,
     registrationEndDate,
