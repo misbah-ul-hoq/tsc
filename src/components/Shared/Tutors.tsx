@@ -11,6 +11,7 @@ type Tutor = {
 const Tutors = () => {
   const [tutors, setTutors] = useState([]);
   const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     setLoading(true);
     api
@@ -26,7 +27,7 @@ const Tutors = () => {
 
   return (
     <section className="container-center">
-      <h2 className="text-3xl font-semibold text-center">Tutors</h2>
+      <h2 className="text-3xl font-semibold text-center pb-3">Tutors</h2>
       {loading && <span className="loading loading-spinner loading-lg"></span>}
       {!loading && (
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">

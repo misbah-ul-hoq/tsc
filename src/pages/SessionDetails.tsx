@@ -3,10 +3,14 @@ import useSession from "../hooks/useSession";
 import useDocumentTitle from "dynamic-title-react";
 import useRole from "../hooks/useRole";
 import { isCurrentDateSmallerOrEqual } from "../helpers/functions";
+import { useAuth } from "../hooks/useAuth";
+import api from "../axios/api";
+import Swal from "sweetalert2";
 
 const SessionDetails = () => {
   const params = useParams();
   const { role } = useRole();
+  const { user } = useAuth();
   console.log(params.id);
   const { data } = useSession(params.id as string);
   useDocumentTitle("Details Page");
@@ -15,11 +19,11 @@ const SessionDetails = () => {
   if (!data) return <span className="loading loading-dots loading-lg"></span>;
 
   const {
-    ///_id,
+    _id,
     sessionTitle,
     sessionDescription,
     //status,
-    //tutorEmail,
+    tutorEmail,
     tutorName,
     registrationStartDate,
     registrationEndDate,
@@ -28,6 +32,25 @@ const SessionDetails = () => {
     registrationFee,
     sessionDuration,
   } = data;
+
+  const handleFreeRegister = () => {
+    api
+      .post(`/booked-sessions`, { sessionId: _id, ...data })
+      .then((res) => {
+        if (res.data.acknowledged) {
+          Swal.fire({
+            title: "Booked successfully",
+            icon: "success",
+          });
+        }
+      })
+      .catch((err) => {
+        Swal.fire({
+          title: err.message,
+          icon: "error",
+        });
+      });
+  };
 
   return (
     <div className="min-h-screen bg-base-200 flex items-center justify-center">
@@ -45,6 +68,11 @@ const SessionDetails = () => {
           <div className="mt-4">
             <h3 className="text-lg font-semibold">Tutor Name:</h3>
             <p className="text-base">{tutorName}</p>
+          </div>
+
+          <div className="mt-4">
+            <h3 className="text-lg font-semibold">Tutor Email:</h3>
+            <p className="text-base">{tutorEmail}</p>
           </div>
 
           <div className="mt-4">
@@ -99,6 +127,11 @@ const SessionDetails = () => {
                 !isCurrentDateSmallerOrEqual(registrationEndDate) &&
                 "btn-disabled"
               } ${role != "student" && "btn-disabled"}`}
+              onClick={() => {
+                if (registrationFee == 0) {
+                  handleFreeRegister();
+                }
+              }}
             >
               {!isCurrentDateSmallerOrEqual(registrationEndDate)
                 ? "Registration Closed"
