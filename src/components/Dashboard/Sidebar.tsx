@@ -29,7 +29,7 @@ const Sidebar = () => {
               <NavLink to="/dashboard/manage-notes">Manage Notes</NavLink>
             </li>
             <li className="py-2">
-              <NavLink to="/dashboard/view-study-materials">
+              <NavLink to="/dashboard/view-session-materials">
                 View Materials
               </NavLink>
             </li>

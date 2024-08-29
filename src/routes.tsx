@@ -22,6 +22,9 @@ import SessionDetails from "./pages/SessionDetails";
 import ViewBookedSessions from "./pages/Dashboard/Student/ViewBookedSessions";
 import StudentRoute from "./pages/Dashboard/StudentRoute";
 import Payment from "./pages/Dashboard/Student/Payment";
+import CreateNote from "./pages/Dashboard/Student/CreateNote";
+import ManageNotes from "./pages/Dashboard/Student/ManageNotes";
+import ViewMaterialsStudent from "./pages/Dashboard/Student/ViewMaterialsStudent";
 
 const router = createBrowserRouter([
   {
@@ -82,7 +85,28 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "",
+        path: "create-note",
+        element: (
+          <StudentRoute>
+            <CreateNote />
+          </StudentRoute>
+        ),
+      },
+      {
+        path: "manage-notes",
+        element: (
+          <StudentRoute>
+            <ManageNotes />
+          </StudentRoute>
+        ),
+      },
+      {
+        path: "view-session-materials",
+        element: (
+          <StudentRoute>
+            <ViewMaterialsStudent />
+          </StudentRoute>
+        ),
       },
       // tutor routes
       {
