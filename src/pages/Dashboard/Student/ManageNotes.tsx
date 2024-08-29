@@ -2,6 +2,7 @@ import { useAuth } from "../../../hooks/useAuth";
 import { useQuery } from "@tanstack/react-query";
 import api from "../../../axios/api";
 import { FormEvent, useState } from "react";
+import Swal from "sweetalert2";
 
 type noteType = {
   _id: string;
@@ -19,7 +20,7 @@ const ManageNotes = () => {
     error: "",
   });
 
-  const { data: notes = [] } = useQuery({
+  const { data: notes = [], refetch } = useQuery({
     queryKey: ["notes", user?.email as string],
     queryFn: async () => {
       const response = await api.get(`/notes/${user?.email}`);
@@ -50,6 +51,7 @@ const ManageNotes = () => {
             ...updateMessage,
             success: "Updated successfully",
           });
+          refetch();
         }
       })
       .catch(() => {
@@ -77,7 +79,36 @@ const ManageNotes = () => {
                 <p>{description}</p>
                 <p>{email}</p>
                 <div className="card-actions justify-end mt-4">
-                  <button className="btn btn-error">Delete</button>
+                  <button
+                    className="btn btn-error"
+                    onClick={() => {
+                      setCurrentNote(note);
+                      Swal.fire({
+                        title: "Are you sure?",
+                        text: "You won't be able to revert this!",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Yes, delete it!",
+                      }).then((result) => {
+                        if (result.isConfirmed) {
+                          api.delete(`/notes/${note._id}`).then((res) => {
+                            if (res.data.deletedCount) {
+                              Swal.fire({
+                                title: "Deleted!",
+                                text: "Your file has been deleted.",
+                                icon: "success",
+                              });
+                              refetch();
+                            }
+                          });
+                        }
+                      });
+                    }}
+                  >
+                    Delete
+                  </button>
                   {/* Open the modal using document.getElementById('ID').showModal() method */}
                   <button
                     className="btn btn-primary"
