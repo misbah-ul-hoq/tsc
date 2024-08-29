@@ -36,7 +36,6 @@ const CreateNote = () => {
         });
         reset();
       });
-    // handle form submission here
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="max-w-lg p-8">
