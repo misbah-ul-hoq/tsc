@@ -21,6 +21,7 @@ import Study from "./pages/StudySessions";
 import SessionDetails from "./pages/SessionDetails";
 import ViewBookedSessions from "./pages/Dashboard/Student/ViewBookedSessions";
 import StudentRoute from "./pages/Dashboard/StudentRoute";
+import Payment from "./pages/Dashboard/Student/Payment";
 
 const router = createBrowserRouter([
   {
@@ -51,6 +52,14 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
+      {
+        path: "/payment",
+        element: (
+          <PrivateRoute>
+            <Payment />
+          </PrivateRoute>
+        ),
+      },
     ],
   },
 
@@ -71,6 +80,9 @@ const router = createBrowserRouter([
             <ViewBookedSessions />
           </StudentRoute>
         ),
+      },
+      {
+        path: "",
       },
       // tutor routes
       {

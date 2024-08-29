@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useSession from "../hooks/useSession";
 import useDocumentTitle from "dynamic-title-react";
 import useRole from "../hooks/useRole";
@@ -7,11 +7,14 @@ import { useAuth } from "../hooks/useAuth";
 import api from "../axios/api";
 import Swal from "sweetalert2";
 import { AxiosError } from "axios";
+import { useState } from "react";
 
 const SessionDetails = () => {
   const params = useParams();
   const { role } = useRole();
   const { user } = useAuth();
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const { data } = useSession(params.id as string);
   useDocumentTitle("Details Page");
@@ -34,6 +37,7 @@ const SessionDetails = () => {
   } = data;
 
   const handleFreeRegister = () => {
+    setLoading(true);
     api
       .post(`/booked-sessions`, {
         sessionId: _id,
@@ -51,6 +55,7 @@ const SessionDetails = () => {
         studentEmail: user?.email,
       })
       .then((res) => {
+        setLoading(false);
         if (res.data.acknowledged) {
           Swal.fire({
             title: "Booked successfully",
@@ -59,8 +64,7 @@ const SessionDetails = () => {
         }
       })
       .catch((err: AxiosError) => {
-        console.log(err.response);
-
+        setLoading(false);
         Swal.fire({
           title:
             err.response?.status == 409
@@ -141,6 +145,9 @@ const SessionDetails = () => {
           </div>
 
           <div className="mt-4 button-wrapper">
+            {loading && (
+              <span className="loading loading-infinity block loading-lg text-purple-600"></span>
+            )}
             <button
               className={`btn ${
                 !isCurrentDateSmallerOrEqual(registrationEndDate) &&
@@ -149,6 +156,8 @@ const SessionDetails = () => {
               onClick={() => {
                 if (registrationFee == 0) {
                   handleFreeRegister();
+                } else {
+                  navigate("/payment");
                 }
               }}
             >

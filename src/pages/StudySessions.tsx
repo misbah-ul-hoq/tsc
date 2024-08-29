@@ -2,9 +2,11 @@ import { Link } from "react-router-dom";
 import useSessions from "../hooks/useSessions";
 import sessionType from "../types/sessionType";
 import { isCurrentDateSmallerOrEqual } from "../helpers/functions";
+import useDocumentTitle from "dynamic-title-react";
 
 const Study = () => {
   const { sessions } = useSessions("approved");
+  useDocumentTitle("Study Sessions");
   return (
     <section className="study-card-wrapper container-center py-5">
       <h2 className="text-3xl font-bold text-center mb-5">Sessions</h2>
