@@ -13,7 +13,7 @@ const ViewBookedSessions = () => {
       return response.data;
     },
   });
-  console.log(sessions);
+
   if (!sessions)
     return <span className="loading loading-spinner loading-md"></span>;
 
