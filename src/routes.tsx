@@ -25,6 +25,7 @@ import Payment from "./pages/Dashboard/Student/Payment";
 import CreateNote from "./pages/Dashboard/Student/CreateNote";
 import ManageNotes from "./pages/Dashboard/Student/ManageNotes";
 import ViewMaterialsStudent from "./pages/Dashboard/Student/ViewMaterialsStudent";
+import SessionReview from "./pages/Dashboard/Student/SessionReview";
 
 const router = createBrowserRouter([
   {
@@ -85,6 +86,14 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: "session-review/:id",
+        element: (
+          <StudentRoute>
+            <SessionReview />
+          </StudentRoute>
+        ),
+      },
+      {
         path: "create-note",
         element: (
           <StudentRoute>
@@ -108,6 +117,7 @@ const router = createBrowserRouter([
           </StudentRoute>
         ),
       },
+
       // tutor routes
       {
         path: "create-session",
