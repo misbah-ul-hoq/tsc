@@ -1,23 +1,3 @@
-// import { useQuery } from "@tanstack/react-query";
-// import { useParams } from "react-router-dom";
-// import api from "../../../axios/api";
-
-// const SessionReview = () => {
-//   const params = useParams();
-
-//   const { data: session } = useQuery({
-//     queryKey: ["session-review"],
-//     queryFn: async () => {
-//       const response = await api.get(`/booked-sessions/?id=${params.id}`);
-//       return response.data;
-//     },
-//   });
-//   console.log(session);
-//   return <div>SessionReview</div>;
-// };
-
-// export default SessionReview;
-
 import { useQuery } from "@tanstack/react-query";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
@@ -58,6 +38,7 @@ const SessionReview = () => {
         reviewText,
         rating: parseInt(rating),
         sessionId,
+        studentName,
       });
       if (response.data.acknowledged) {
         Swal.fire({

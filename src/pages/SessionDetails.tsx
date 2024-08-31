@@ -8,6 +8,7 @@ import api from "../axios/api";
 import Swal from "sweetalert2";
 import { AxiosError } from "axios";
 import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 
 const SessionDetails = () => {
   const params = useParams();
@@ -15,6 +16,13 @@ const SessionDetails = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const { data: review = [] } = useQuery({
+    queryKey: [""],
+    queryFn: async () => {
+      const response = await api.get(`/ratings/${params.id}`);
+      return response.data;
+    },
+  });
 
   const { data } = useSession(params.id as string);
   useDocumentTitle("Details Page");
@@ -177,18 +185,27 @@ const SessionDetails = () => {
                   <p>{review.comment}</p>
                 </div>
               ))} */}
-              <div className="">
-                <h4 className="text-lg font-semibold">
-                  Reviewer name goes here
-                </h4>
-                <p className="text-sm text-gray-600">Rating: 3 / 5</p>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                  Ratione ullam asperiores tempore impedit atque quam magni id
-                  nisi sint cupiditate, qui odit deleniti dolorem aliquam?
-                  Deserunt esse impedit sed ad!
-                </p>
-              </div>
+              {review.map(
+                (item: {
+                  _id: string;
+                  reviewText: string;
+                  rating: number;
+                  sessionId: string;
+                  studentName: string;
+                }) => {
+                  return (
+                    <div key={item._id} className="space-y-1">
+                      <h4 className="text-lg font-semibold">
+                        {item.studentName}
+                      </h4>
+                      <p className="text-sm text-gray-600">
+                        Rating: {item.rating} / 5
+                      </p>
+                      <p>{item.reviewText}</p>
+                    </div>
+                  );
+                }
+              )}
             </div>
           </div>
         </div>
