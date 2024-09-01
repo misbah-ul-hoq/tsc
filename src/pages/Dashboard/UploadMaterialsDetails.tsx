@@ -2,7 +2,6 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import api from "../../axios/api";
-import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 
 type FormValues = {
