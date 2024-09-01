@@ -18,7 +18,7 @@ const UploadMaterialsDetails = () => {
   const [showSuccessText, setShowSuccessText] = useState(false);
   const params = useParams();
   const { data } = useQuery({
-    queryKey: ["upload-materials"],
+    queryKey: ["upload-materials", params.id],
     queryFn: async () => {
       const response = await api.get(`/study-session/${params.id}`);
       return response.data;
