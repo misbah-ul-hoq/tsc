@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import api from "../../axios/api";
 import { useQuery } from "@tanstack/react-query";
@@ -17,13 +17,19 @@ const UploadMaterialsDetails = () => {
   const [isUploading, setUploading] = useState(false);
   const [showSuccessText, setShowSuccessText] = useState(false);
   const params = useParams();
-  const { data } = useQuery({
-    queryKey: ["upload-materials", params.id],
-    queryFn: async () => {
-      const response = await api.get(`/study-session/${params.id}`);
-      return response.data;
-    },
-  });
+  const [data, setdata] = useState(undefined);
+  // const { data } = useQuery({
+  //   queryKey: [undefined],
+  //   queryFn: async () => {
+  //     const response = await api.get(`/study-session/${params.id}`);
+  //     return response.data;
+  //   },
+  // });
+  useEffect(() => {
+    api.get(`/study-session/${params.id}`).then((res) => {
+      setdata(res.data);
+    });
+  }, [params]);
 
   const {
     register,
