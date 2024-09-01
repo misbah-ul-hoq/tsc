@@ -27,6 +27,7 @@ import ManageNotes from "./pages/Dashboard/Student/ManageNotes";
 import ViewMaterialsStudent from "./pages/Dashboard/Student/ViewMaterialsStudent";
 import SessionReview from "./pages/Dashboard/Student/SessionReview";
 import ViewMaterialsInfo from "./pages/Dashboard/Student/ViewMaterialsInfo";
+import UploadMaterialsDetails from "./pages/Dashboard/UploadMaterialsDetails";
 
 const router = createBrowserRouter([
   {
@@ -149,6 +150,14 @@ const router = createBrowserRouter([
         element: (
           <TutorRoute>
             <UploadMaterials />
+          </TutorRoute>
+        ),
+      },
+      {
+        path: "upload-materials/:id",
+        element: (
+          <TutorRoute>
+            <UploadMaterialsDetails />
           </TutorRoute>
         ),
       },
