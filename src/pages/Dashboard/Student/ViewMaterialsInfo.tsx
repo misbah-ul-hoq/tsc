@@ -47,13 +47,13 @@ const ViewMaterialsInfo = () => {
   };
 
   return (
-    <section className="p-4">
+    <section className="p-4 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
       {data.map((item: materialsType) => {
         const { _id, viewLink, link, title } = item;
         return (
           <div
             key={_id}
-            className="card card-compact bg-base-100 max-w-96 shadow-xl"
+            className="card card-compact max-w-96 md:w-auto bg-base-100 shadow-xl"
           >
             <figure>
               <img
