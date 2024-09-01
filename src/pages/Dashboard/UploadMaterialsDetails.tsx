@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -88,6 +89,7 @@ const UploadMaterialsDetails = () => {
     <div className="p-4">
       <h2 className="text-purple-700 font-bold text-2xl mb-5">
         {" "}
+        {/* @ts-expect-error */}
         Upload Materials for {data?.sessionTitle}
       </h2>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -109,6 +111,7 @@ const UploadMaterialsDetails = () => {
           <label className="block font-medium">Study Session ID</label>
           <input
             type="text"
+            //  @ts-expect-error
             value={data?._id}
             readOnly
             {...register("sessionId")}
@@ -121,6 +124,7 @@ const UploadMaterialsDetails = () => {
           <label className="block font-medium">Tutor Email</label>
           <input
             type="email"
+            //  @ts-expect-error
             value={data?.tutorEmail}
             readOnly
             {...register("tutorEmail")}
