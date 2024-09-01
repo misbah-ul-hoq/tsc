@@ -94,7 +94,7 @@ const SessionReview = () => {
             <span className="badge badge-success mt-4">Free Registration</span>
           ) : (
             <span className="badge badge-primary mt-4">
-              Fee: ${registrationFee}
+              Fee: {registrationFee} tk
             </span>
           )}
         </div>

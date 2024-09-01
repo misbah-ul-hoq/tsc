@@ -26,6 +26,7 @@ import CreateNote from "./pages/Dashboard/Student/CreateNote";
 import ManageNotes from "./pages/Dashboard/Student/ManageNotes";
 import ViewMaterialsStudent from "./pages/Dashboard/Student/ViewMaterialsStudent";
 import SessionReview from "./pages/Dashboard/Student/SessionReview";
+import ViewMaterialsInfo from "./pages/Dashboard/Student/ViewMaterialsInfo";
 
 const router = createBrowserRouter([
   {
@@ -114,6 +115,14 @@ const router = createBrowserRouter([
         element: (
           <StudentRoute>
             <ViewMaterialsStudent />
+          </StudentRoute>
+        ),
+      },
+      {
+        path: "view-materials/:id",
+        element: (
+          <StudentRoute>
+            <ViewMaterialsInfo />
           </StudentRoute>
         ),
       },
