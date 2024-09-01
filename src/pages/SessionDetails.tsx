@@ -17,7 +17,7 @@ const SessionDetails = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const { data: review = [] } = useQuery({
-    queryKey: [""],
+    queryKey: ["review"],
     queryFn: async () => {
       const response = await api.get(`/ratings/${params.id}`);
       return response.data;
@@ -165,7 +165,7 @@ const SessionDetails = () => {
                 if (registrationFee == 0) {
                   handleFreeRegister();
                 } else {
-                  navigate("/payment");
+                  navigate(`/payment/${params.id}`);
                 }
               }}
             >
